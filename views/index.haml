@@ -1,0 +1,5 @@
+%center
+  %h1
+    Hello
+  -@photos.each do |photo|
+    %img{src: "#{Flickr.construct_url(photo)}"}
