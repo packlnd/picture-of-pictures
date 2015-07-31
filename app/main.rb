@@ -6,3 +6,5 @@ module App
     end
   end
 end
+
+#TODO http://ruby.bastardsbook.com/chapters/image-manipulation/
