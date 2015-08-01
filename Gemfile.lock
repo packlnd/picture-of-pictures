@@ -1,5 +1,5 @@
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     addressable (2.3.8)
     builder (3.2.2)
@@ -11,6 +11,8 @@ GEM
       tilt
     json (1.8.3)
     method_source (0.8.2)
+    prizm (0.0.3)
+      rmagick
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -19,6 +21,7 @@ GEM
     rack-protection (1.5.3)
       rack
     rb-readline (0.5.3)
+    rmagick (2.13.4)
     sequel (4.24.0)
     shotgun (0.9.1)
       rack (>= 1.0)
@@ -41,8 +44,10 @@ DEPENDENCIES
   flickraw
   haml
   json
+  prizm
   pry
   rb-readline
+  rmagick (~> 2.13.2)
   sequel
   shotgun
   sinatra

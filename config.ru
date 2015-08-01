@@ -1,8 +1,8 @@
 require 'sinatra'
 require 'haml'
 require 'sequel'
+require 'rmagick'
+require 'prizm'
 require File.dirname(__FILE__) + '/boot.rb'
 
-map "/" do
-  run App::Main
-end
+run App::Main

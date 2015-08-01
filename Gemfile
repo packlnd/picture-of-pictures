@@ -1,4 +1,4 @@
-source :rubygems
+source 'https://rubygems.org'
 
 gem 'dm-core'
 gem 'sinatra'
@@ -12,4 +12,6 @@ gem 'rb-readline'
 gem 'builder'
 gem 'json'
 gem 'pry'
+gem "rmagick", "~>2.13.2", :require => 'RMagick'
 gem 'flickraw'
+gem 'prizm'
