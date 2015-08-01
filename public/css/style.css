@@ -1,0 +1,13 @@
+body {
+  font-family: Verdana;
+}
+
+input#url {
+  width:40%;
+  padding:6px;
+  font-weight:bold;
+}
+
+input#create_image {
+  height: 31px;
+}
