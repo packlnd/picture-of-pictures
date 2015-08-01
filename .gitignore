@@ -1,1 +1,3 @@
-js/config.js
+models/config.rb
+*.swp
+*.db
