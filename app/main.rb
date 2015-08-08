@@ -15,7 +15,7 @@ module App
     end
 
     get '/pop' do
-      @pop = Image.create_pop(params[:url])
+      Image.create_pop(params[:url])
     end
   end
 end

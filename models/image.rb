@@ -26,7 +26,7 @@ class Image < Sequel::Model
   end
 
   def self.create_pop(url)
-    Array.new(150) {Array.new(150,url)}
+    Array.new(150) {Array.new(150,url)}.to_json
   end
 
   def self.get_coverage

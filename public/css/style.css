@@ -11,3 +11,17 @@ input#url {
 input#create_image {
   height: 31px;
 }
+
+img#source_img {
+  width:150px;
+  height:150px;
+}
+
+.clear {
+  clear: both;
+  margin: 0px;
+}
+
+h1 {
+  margin-top: 0px;
+}

@@ -14,8 +14,24 @@ $(document).ready(function() {
   });
 
   $("#create_image").click(function() {
-    var url = $("#url").val()
-    $.ajax({url: "/pop?url=" + url});
+    var url = $("#url").val();
+    $("#source_image").attr("src", url);
+    $.ajax({
+      url: "/pop?url=" + url,
+      dataType: "json",
+      success: function(json, status) {
+        var SIZE=5;
+        $("#pop_image").attr("style", "width: " + json.length*SIZE + "px; height: " + json[0].length*SIZE + "px;");
+        for (var i=0; i<json.length; ++i) {
+          for (var j=0; j<json[i].length; ++j) {
+            var img = new Image();
+            $(img).attr("style", "width: " + SIZE + "px; height: " + SIZE + "px; float: left; margin: 0px;");
+            $(img).attr("src", json[i][j]);
+            $("#pop_image").append(img);
+          }
+        }
+      }
+    });
   });
 });
 
