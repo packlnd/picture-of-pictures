@@ -20,7 +20,6 @@ $(document).ready(function() {
 });
 
 function update_coverage() {
-  alert("Updated coverage");
   $.ajax({
     url: "/coverage",
     success: function(coverage, status) {

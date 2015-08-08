@@ -4,9 +4,8 @@ require 'sequel'
 
 DB = Sequel.connect('sqlite://db.db')
 DB.create_table? :images do
-  String :color, :null=>false
+  String :color, :null=>false, :unique=>true
   String :url, :null=>false
-  primary_key :color
 end
 
 class Image < Sequel::Model
@@ -17,6 +16,9 @@ class Image < Sequel::Model
   end
 
   def self.insert_in_db(url, color)
+    if Image.where(color: color).any?
+      return
+    end
     img = Image.new
     img.url=url
     img.color=color
@@ -28,6 +30,6 @@ class Image < Sequel::Model
   end
 
   def self.get_coverage
-    "0"
+    (100*Image.count/(256*256*256)).to_s
   end
 end

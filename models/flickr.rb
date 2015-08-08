@@ -5,7 +5,6 @@ class Flickr
     photos = get_images
     photos.each do |photo|
       url = FlickRaw.url_q(photo)
-      puts url
       begin
         hex_string = Image.dominant_color(url)
         rescue Magick::ImageMagickError
@@ -13,7 +12,6 @@ class Flickr
       end
       Image.insert_in_db(url, hex_string)
     end
-    puts "done"
   end
 
   def self.get_images
