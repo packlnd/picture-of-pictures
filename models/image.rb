@@ -4,8 +4,9 @@ require 'sequel'
 
 DB = Sequel.connect('sqlite://db.db')
 DB.create_table? :images do
-  String :color, unique: true, null: false
-  String :url, null: false
+  String :color, :null=>false
+  String :url, :null=>false
+  primary_key :color
 end
 
 class Image < Sequel::Model

@@ -11,16 +11,11 @@ module App
 
     get '/index' do
       Flickr.index_images
+      Image.get_coverage
     end
 
     get '/pop' do
       @pop = Image.create_pop(params[:url])
-      redirect '/pap'
-    end
-
-    get '/pap' do
-      @pop = [[],[]]
-      haml :pop
     end
   end
 end
