@@ -1,4 +1,7 @@
 require 'flickraw'
+require 'set'
+
+S = Set.new
 
 class Flickr
   def self.index_images
@@ -10,7 +13,10 @@ class Flickr
         rescue Magick::ImageMagickError
           next
       end
-      Image.insert_in_db(url, hex_string)
+      unless S.include? hex_string
+        Image.insert_in_db(url, hex_string)
+        S.add hex_string
+      end
     end
   end
 

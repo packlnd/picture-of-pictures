@@ -10,6 +10,8 @@ DB.create_table? :images do
   String :url, :null=>false
 end
 
+DEFAULT = Magick::Image.read("public/imgs/default.png")
+
 class Image < Sequel::Model
   def self.dominant_color(url)
     ext = Prizm::Extractor.new(url)
@@ -28,17 +30,23 @@ class Image < Sequel::Model
   end
 
   def self.create_pop(url)
+    h = Hash.new
     img = Magick::ImageList.new
     img.from_blob(open(url).read)
     row = img.rows
     col = img.columns
     ilg = Magick::ImageList.new
-    1.upto(col) { |x|
+    1.upto(col) { |y|
       il = Magick::ImageList.new
-      1.upto(row) { |y|
+      1.upto(row) { |x|
         hex_color = get_hex_color(x,y,img)
-        tmp = get_flickr_url(hex_color)
-        il.push(tmp.first.scale(0.04))
+        if (h_img=h[hex_color]) == nil
+          tmp = get_flickr_url(hex_color).first.scale(0.06)
+          h[hex_color] = tmp
+          il.push(tmp)
+        else
+          il.push(h_img)
+        end
       }
       ilg.push(il.append(false))
     }
@@ -47,19 +55,19 @@ class Image < Sequel::Model
   end
 
   def self.get_flickr_url(hex_color)
-    img = Image.where(color: hex_color)
-    if img.empty?
-      Magick::Image.read("public/imgs/default.png")
-    else
-      Magick::Image.from_blob(open(img.map(:url)[0]).read)
+    img = Image[color: hex_color]
+    unless img == nil
+      url = img[:url]
+      return Magick::Image.from_blob(open(url).read)
     end
+    DEFAULT
   end
 
   def self.to_hex(px)
     r8b = px.red & 255
     g8b = px.green & 255
     b8b = px.blue & 255
-    "#%02X%02X%02X" % [r8b, g8b, b8b]
+    sprintf("#%02X%02X%02X", r8b, g8b, b8b)
   end
 
   def self.get_hex_color(x,y,img)
@@ -68,6 +76,6 @@ class Image < Sequel::Model
   end
 
   def self.get_coverage
-    (100*Image.count/(256*256*256)).to_s
+    sprintf("%.2f", (100*Image.count/(256.0*256*256)))
   end
 end
