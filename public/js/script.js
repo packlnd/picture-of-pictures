@@ -10,9 +10,11 @@ $(document).ready(function() {
     toggle_all();
     $.ajax({
       url: "/pop?url=" + url,
-      success: function(json, status) {
+      success: function(pcnt, status) {
         var img = new Image();
-        $(img).attr("src", json);
+        $(img).attr("src", "out.jpg");
+        //$("#p-coverage").html(pcnt);
+        //$("#p-coverage").show();
         $("#pop_image").append(img);
         show_new_button();
       }

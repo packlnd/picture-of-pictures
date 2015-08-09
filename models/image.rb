@@ -13,6 +13,7 @@ end
 DEFAULT = Magick::Image.read("public/imgs/default.png")
 
 class Image < Sequel::Model
+  @@counter = 0.0
   def self.dominant_color(url)
     ext = Prizm::Extractor.new(url)
     pixel = ext.get_colors(1, false)[0]
@@ -30,6 +31,7 @@ class Image < Sequel::Model
   end
 
   def self.create_pop(url)
+    @@counter = 0.0
     h = Hash.new
     img = Magick::ImageList.new
     img.from_blob(open(url).read)
@@ -51,13 +53,14 @@ class Image < Sequel::Model
       ilg.push(il.append(false))
     }
     ilg.append(true).write("public/out.jpg")
-    "out.jpg"
+    sprintf("%.2f%", 100*@@counter/(row*col))
   end
 
   def self.get_flickr_url(hex_color)
     img = Image[color: hex_color]
     unless img == nil
       url = img[:url]
+      @@counter = @@counter+1
       return Magick::Image.from_blob(open(url).read)
     end
     DEFAULT
