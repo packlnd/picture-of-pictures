@@ -8,6 +8,8 @@ class Flickr
     photos = get_images
     photos.each do |photo|
       url = FlickRaw.url_q(photo)
+      if S.include? url then next end
+      S.add url
       begin
         hex_string = Image.dominant_color(url)
         rescue Magick::ImageMagickError
