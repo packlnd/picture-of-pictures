@@ -1,31 +1,35 @@
 $(document).ready(function() {
+  $("#frm").hide();
   $("#coverage").click(function() {
     update_coverage();
-  });
-
-  $("#indexing").click(function() {
-    $("#p-coverage").html("Indexing images..");
-    $.ajax({
-      url: "/index",
-      success: function(coverage, status) {
-        set_coverage(coverage);
-      }
-    });
   });
 
   $("#create_image").click(function() {
     var url = $("#url").val();
     $("#source_image").attr("src", url);
+    toggle_all();
     $.ajax({
       url: "/pop?url=" + url,
       success: function(json, status) {
         var img = new Image();
         $(img).attr("src", json);
         $("#pop_image").append(img);
+        show_new_button();
       }
     });
   });
 });
+
+function show_new_button() {
+  $("#frm").show();
+}
+
+function toggle_all() {
+  $("#coverage").toggle();
+  $("#p-coverage").toggle();
+  $("#url").toggle();
+  $("#create_image").toggle();
+}
 
 function update_coverage() {
   $.ajax({

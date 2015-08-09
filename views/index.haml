@@ -9,7 +9,6 @@
   %body
     %div{style: "float: right;"}
       %input{id: "coverage", type: "submit", value: "Coverage"}
-      %input{id: "indexing", type: "submit", value: "Index images"}
     .clear
     %center
       %p{id: "p-coverage"} --% coverage
@@ -18,6 +17,8 @@
       %input{id: "url", type: "text"}
       %input{id: "create_image", type: "submit", value: "Create POP"}
       .clear
+      %form{id: "frm", action: "/"}
+        %input{id: "new_pop", type: "submit", value: "New POP"}
       %br
       %img{id: "source_image"}
       %br
