@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'sequel'
 require 'rmagick'
-require "open-uri"
 require 'shade'
 
 DB = Sequel.connect('sqlite://db.db')
@@ -10,7 +9,8 @@ DB.create_table? :images do
   String :url, :null=>false
 end
 
-#DEFAULT = Magick::Image.read("public/imgs/default.png")
+DEFAULT = Magick::Image.read("public/imgs/default.png")
+H = Hash.new
 
 class Image < Sequel::Model
 
@@ -29,6 +29,30 @@ class Image < Sequel::Model
     img.url=url
     img.color=color
     img.save
+  end
+
+  def self.begin_pop(pop)
+    puts "Beginning new pop"
+    do_row
+    200
+  end
+
+  def self.do_row(pop)
+    il = Magick::ImageList.new
+    1.upto(pop.col) { |x|
+      hex_color = get_hex_color(x-1,pop.y,pop.img)
+      if (h_img=H[hex_color]) == nil
+        tmp = get_flickr_url(hex_color).first.scale(0.02)
+        H[hex_color] = tmp
+        il.push(tmp)
+      else
+        il.push(h_img)
+      end
+    }
+    pop.add_il il
+    pop.write_to_file
+    pop.increment_y
+    200
   end
 
   def self.create_pop(url)

@@ -1,11 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.3.8)
-    builder (3.2.2)
     daemons (1.2.3)
-    dm-core (1.2.1)
-      addressable (~> 2.3)
     eventmachine (1.0.8)
     flickraw (0.9.8)
     haml (4.0.6)
@@ -16,11 +12,8 @@ GEM
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
-    rb-readline (0.5.3)
     rmagick (2.13.4)
     sequel (4.24.0)
-    shotgun (0.9.1)
-      rack (>= 1.0)
     sinatra (1.4.6)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -36,16 +29,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  builder
-  dm-core
   flickraw
   haml
   json
   prizm
-  rb-readline
   rmagick (~> 2.13.2)
   sequel
-  shotgun
   sinatra
   sqlite3
   thin
