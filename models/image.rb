@@ -41,10 +41,10 @@ class Image < Sequel::Model
     row = img.rows
     col = img.columns
     ilg = Magick::ImageList.new
-    1.upto(col) { |y|
+    1.upto(row) { |y|
       il = Magick::ImageList.new
-      1.upto(row) { |x|
-        hex_color = get_hex_color(x,y,img)
+      1.upto(col) { |x|
+        hex_color = get_hex_color(x-1,y-1,img)
         if (h_img=h[hex_color]) == nil
           tmp = get_flickr_url(hex_color).first.scale(0.02)
           h[hex_color] = tmp
@@ -54,7 +54,7 @@ class Image < Sequel::Model
         end
       }
       ilg.push(il.append(false))
-      puts y.to_s + "/" + col.to_s
+      puts y.to_s + "/" + row.to_s
     }
     ilg.append(true).write("public/out.jpg")
     sprintf("%.2f%", 100*@@counter/(row*col))
