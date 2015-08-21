@@ -1,4 +1,5 @@
 require 'flickraw'
+require 'colorscore'
 require 'set'
 
 S = Set.new
@@ -11,13 +12,13 @@ class Flickr
       if S.include? url then next end
       S.add url
       begin
-        hex_string = Image.dominant_color(url)
+        s,hc=Image.dominant_color(url)
         rescue Magick::ImageMagickError
           next
       end
-      unless S.include? hex_string
-        Image.insert_in_db(url, hex_string)
-        S.add hex_string
+      unless S.include? hc or s<0.33
+        Image.insert_in_db(url, hc)
+        S.add hc
       end
     end
   end

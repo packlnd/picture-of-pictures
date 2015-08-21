@@ -1,3 +1,5 @@
+require 'profiler'
+
 module App
   class Main < Sinatra::Application
     get '/' do

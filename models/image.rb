@@ -1,8 +1,8 @@
 require 'rubygems'
-require 'prizm'
 require 'sequel'
 require 'rmagick'
 require "open-uri"
+require 'shade'
 
 DB = Sequel.connect('sqlite://db.db')
 DB.create_table? :images do
@@ -10,14 +10,17 @@ DB.create_table? :images do
   String :url, :null=>false
 end
 
-DEFAULT = Magick::Image.read("public/imgs/default.png")
+#DEFAULT = Magick::Image.read("public/imgs/default.png")
 
 class Image < Sequel::Model
+
   @@counter = 0.0
+
   def self.dominant_color(url)
-    ext = Prizm::Extractor.new(url)
-    pixel = ext.get_colors(1, false)[0]
-    to_hex(pixel)
+    hg = Colorscore::Histogram.new(url)
+    s,hc = hg.scores.first
+    if hc.nil? then return 0.0,'#' end
+    return s,hc.html.upcase
   end
 
   def self.insert_in_db(url, color)
@@ -43,7 +46,7 @@ class Image < Sequel::Model
       1.upto(row) { |x|
         hex_color = get_hex_color(x,y,img)
         if (h_img=h[hex_color]) == nil
-          tmp = get_flickr_url(hex_color).first.scale(0.06)
+          tmp = get_flickr_url(hex_color).first.scale(0.02)
           h[hex_color] = tmp
           il.push(tmp)
         else
@@ -51,6 +54,7 @@ class Image < Sequel::Model
         end
       }
       ilg.push(il.append(false))
+      puts y.to_s + "/" + col.to_s
     }
     ilg.append(true).write("public/out.jpg")
     sprintf("%.2f%", 100*@@counter/(row*col))
@@ -63,7 +67,11 @@ class Image < Sequel::Model
       @@counter = @@counter+1
       return Magick::Image.from_blob(open(url).read)
     end
-    DEFAULT
+    get_similar hex_color
+  end
+
+  def self.get_similar(hc)
+    get_flickr_url P.nearest_value(hc).color.html.upcase
   end
 
   def self.to_hex(px)
@@ -81,4 +89,9 @@ class Image < Sequel::Model
   def self.get_coverage
     sprintf("%.2f", (100*Image.count/(256.0*256*256)))
   end
+end
+
+P = Shade::Palette.new
+Image.map(:color).each do |c|
+  P.add(c)
 end
