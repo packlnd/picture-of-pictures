@@ -1,30 +1,24 @@
 $(document).ready(function() {
-  $("#frm").hide();
+  $("#frm_new").hide();
   $("#coverage").click(function() {
     update_coverage();
   });
-
   $("#create_image").click(function() {
     var url = $("#url").val();
     $("#source_image").attr("src", url);
     toggle_all();
+    $("#frm_cancel").show();
     $.ajax({
       url: "/pop?url=" + url,
       success: function(pcnt, status) {
         var img = new Image();
         $(img).attr("src", "out.jpg");
-        //$("#p-coverage").html(pcnt);
-        //$("#p-coverage").show();
         $("#pop_image").append(img);
-        show_new_button();
+        $("#frm_new").show();
       }
     });
   });
 });
-
-function show_new_button() {
-  $("#frm").show();
-}
 
 function toggle_all() {
   $("#coverage").toggle();

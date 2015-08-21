@@ -19,5 +19,9 @@ module App
     get '/pop' do
       Image.create_pop(params[:url])
     end
+
+    get '/cancel' do
+      puts "CANCEL"
+    end
   end
 end
