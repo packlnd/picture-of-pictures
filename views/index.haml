@@ -7,21 +7,21 @@
     %script{src: "/js/script.js"}
     %link{href: "/css/style.css", type: "text/css", rel: "stylesheet"}
   %body
-    .right
-      %input#coverage{type: "submit", value: "Coverage"}
+    %input#coverage.right{type: "submit", value: "Coverage"}
     .clear
     #content
       %center
-        %p#p-coverage
-        %br
-        %h1 PICTURE OF PICTURES
-        %input#url{type: "text"}
-        %input#create_image{type: "submit", value: "Create POP"}
-        .clear
-      %select#sel_size
-        %option{value: "small"} Small
-        %option{value: "medium"} Medium
-        %option{value: "large"} Large
+        #tools
+          %p#p-coverage
+          %br
+          %h1 PICTURE OF PICTURES
+          %input#url{type: "text"}
+          %input#create_image{type: "submit", value: "Create POP"}
+          .clear
+          %select#sel_size.left
+            %option{value: "small"} Small
+            %option{value: "medium"} Medium
+            %option{value: "large"} Large
       %center
         %form#frm_new{action: "/"}
           %input#new_pop{type: "submit", value: "New POP"}

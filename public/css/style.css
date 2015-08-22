@@ -52,8 +52,17 @@ img.thumbnail {
   height: auto;
 }
 
+#tools {
+  width:700px;
+}
+
+select#sel_size {
+  margin-top: 7px;
+  margin-left: 45px;
+}
+
 #recent_links {
   width: 100%;
-  bottom: 0;
+  bottom: 15px;
   position: fixed;
 }
