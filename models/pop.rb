@@ -4,6 +4,7 @@ O = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
 
 class Pop
   def initialize(url, inc, size)
+    @url = url
     @size = case size
             when "small"
               0.02
@@ -70,6 +71,18 @@ class Pop
 
   def add_il(il)
     @ilg.push(il.append(false))
+  end
+
+  def done?
+    @y == @row
+  end
+
+  def finalize
+    if Recent.where(source: @url).any? then return end
+    r = Recent.new
+    r.source = @url
+    r.result = @current_fname
+    r.save
   end
 
 end

@@ -1,14 +1,3 @@
-require 'rubygems'
-require 'sequel'
-require 'rmagick'
-require 'shade'
-
-DB = Sequel.connect('sqlite://db.db')
-DB.create_table? :images do
-  String :color, :null=>false, :unique=>true
-  String :url, :null=>false
-end
-
 class Image < Sequel::Model
 
   def self.dominant_color(url)
@@ -45,6 +34,7 @@ class Image < Sequel::Model
     }
     pop.increment
     pop.write_to_file
+    if pop.done? then pop.finalize end
     pop.fname
   end
 

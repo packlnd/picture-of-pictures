@@ -1,5 +1,5 @@
 var tot=0
-var cur=0;
+var cur=1;
 var inc = 1;
 
 $(document).ready(function() {
@@ -20,7 +20,6 @@ $(document).ready(function() {
     $("#frm_cancel").show();
     $.ajax({
       url: "/begin_pop?inc=" + inc + "&url=" + url + "&size=" + size,
-      timeout: 600000,
       success: function(img_name, status) {
         do_next_row(img_name);
       },
@@ -35,21 +34,21 @@ function do_next_row(img_name) {
   cur += inc;
   var img = new Image();
   img.src = img_name;
-  img.onload = function() { $("#pop_image").html(img); };
-  if (cur >= tot) {
-    $("#frm_new").show();
-    return;
-  }
-  $.ajax({
-    url: "/continue_pop",
-    timeout: 600000,
-    success: function(img_name, status) {
-      do_next_row(img_name);
-    },
-    error: function(xhr, textStatus, errorThrown) {
-      console.log(xhr +" "+ textStatus);
+  img.onload = function() { $("#pop_image").html(img);
+    if (cur > tot) {
+      $("#frm_new").show();
+      return;
     }
-  });
+    $.ajax({
+      url: "/continue_pop",
+      success: function(img_name, status) {
+        do_next_row(img_name);
+      },
+      error: function(xhr, textStatus, errorThrown) {
+        console.log(xhr +" "+ textStatus);
+      }
+    });
+  };
 }
 
 function toggle_all() {
@@ -58,14 +57,15 @@ function toggle_all() {
   $("#url").toggle();
   $("#create_image").toggle();
   $("#sel_size").toggle();
+  $("#recent_links").toggle();
 }
 
 function update_coverage() {
   $.ajax({
     url: "/coverage",
-  success: function(coverage, status) {
-    set_coverage(coverage);
-  }
+    success: function(coverage, status) {
+      set_coverage(coverage);
+    }
   });
 }
 

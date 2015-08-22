@@ -7,6 +7,7 @@ require 'open-uri'
 require 'set'
 require 'shade'
 require 'profiler'
+require './models/database.rb'
 Dir.glob('models/*.rb').each do |model|
   require_relative model
 end
@@ -16,6 +17,7 @@ configure do
 end
 
 get '/' do
+  @recent = Recent.all
   haml :index
 end
 
