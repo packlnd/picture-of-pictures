@@ -1,6 +1,6 @@
 var tot=0
 var cur=0;
-var inc = 3;
+var inc = 1;
 
 $(document).ready(function() {
   $("#frm_new").hide();
@@ -9,6 +9,7 @@ $(document).ready(function() {
   });
   $("#create_image").click(function() {
     var url = $("#url").val();
+    var size = $("#sel_size").val();
     var img = document.getElementById("source_image");
     img.src=url;
     img.onload = function() {
@@ -17,11 +18,14 @@ $(document).ready(function() {
     };
     toggle_all();
     $("#frm_cancel").show();
-    console.log("Starting pop");
     $.ajax({
-      url: "/begin_pop?inc=" + inc + "&url=" + url,
+      url: "/begin_pop?inc=" + inc + "&url=" + url + "&size=" + size,
+      timeout: 600000,
       success: function(img_name, status) {
         do_next_row(img_name);
+      },
+      error: function(xhr, textStatus, errorThrown) {
+        console.log(xhr +" "+ textStatus);
       }
     });
   });
@@ -38,11 +42,14 @@ function do_next_row(img_name) {
   }
   $.ajax({
     url: "/continue_pop",
+    timeout: 600000,
     success: function(img_name, status) {
       do_next_row(img_name);
+    },
+    error: function(xhr, textStatus, errorThrown) {
+      console.log(xhr +" "+ textStatus);
     }
   });
-  
 }
 
 function toggle_all() {
@@ -50,14 +57,15 @@ function toggle_all() {
   $("#p-coverage").toggle();
   $("#url").toggle();
   $("#create_image").toggle();
+  $("#sel_size").toggle();
 }
 
 function update_coverage() {
   $.ajax({
     url: "/coverage",
-    success: function(coverage, status) {
-      set_coverage(coverage);
-    }
+  success: function(coverage, status) {
+    set_coverage(coverage);
+  }
   });
 }
 

@@ -7,23 +7,29 @@
     %script{src: "/js/script.js"}
     %link{href: "/css/style.css", type: "text/css", rel: "stylesheet"}
   %body
-    %div{style: "float: right;"}
-      %input{id: "coverage", type: "submit", value: "Coverage"}
+    .right
+      %input#coverage{type: "submit", value: "Coverage"}
     .clear
-    %center
-      %p{id: "p-coverage"}
-      %br
-      %h1 PICTURE OF PICTURES
-      %input{id: "url", type: "text"}
-      %input{id: "create_image", type: "submit", value: "Create POP"}
-      .clear
-      %form{id: "frm_new", action: "/"}
-        %input{id: "new_pop", type: "submit", value: "New POP"}
-      %br
-      %img{id: "source_image"}
-      %br
-      %br
-      #pop_image
-      %br
-      %br
-      %br
+    #content
+      %center
+        %p#p-coverage
+        %br
+        %h1 PICTURE OF PICTURES
+        %input#url{type: "text"}
+        %input#create_image{type: "submit", value: "Create POP"}
+        .clear
+      %select#sel_size
+        %option{value: "small"} Small
+        %option{value: "medium"} Medium
+        %option{value: "large"} Large
+      %center
+        %form#frm_new{action: "/"}
+          %input#new_pop{type: "submit", value: "New POP"}
+        %br
+        %img#source_image
+        %br
+        %br
+        #pop_image
+        %br
+        %br
+        %br

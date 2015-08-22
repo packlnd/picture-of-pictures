@@ -3,7 +3,7 @@ body {
 }
 
 input#url {
-  width:40%;
+  width:500px;
   padding:6px;
   font-weight:bold;
 }
@@ -12,9 +12,12 @@ input#create_image {
   height: 31px;
 }
 
-img#source_img {
-  width:150px;
-  height:150px;
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
 }
 
 .clear {
@@ -24,4 +27,10 @@ img#source_img {
 
 h1 {
   margin-top: 0px;
+}
+
+#content {
+  width: 610px;
+  margin-left: auto;
+  margin-right: auto;
 }

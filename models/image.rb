@@ -9,9 +9,6 @@ DB.create_table? :images do
   String :url, :null=>false
 end
 
-DEFAULT = Magick::Image.read("public/imgs/default.png")
-H = Hash.new
-
 class Image < Sequel::Model
 
   def self.dominant_color(url)
@@ -36,9 +33,9 @@ class Image < Sequel::Model
       il = Magick::ImageList.new
       1.upto(pop.col) { |x|
         hex_color = get_hex_color(x-1,pop.y+(y-1),pop.img)
-        if (h_img=H[hex_color]) == nil
-          tmp = get_flickr_url(hex_color).first.scale(0.02)
-          H[hex_color] = tmp
+        if (h_img=pop.get_cache(hex_color)) == nil
+          tmp = get_flickr_url(hex_color).first.scale(pop.size)
+          pop.cache hex_color, tmp
           il.push(tmp)
         else
           il.push(h_img)

@@ -29,7 +29,7 @@ get '/index' do
 end
 
 get '/begin_pop' do
-  @@pop = Pop.new(params[:url], params[:inc].to_i)
+  @@pop = Pop.new(params[:url], params[:inc].to_i, params[:size])
   Image.do_pop_row @@pop
 end
 
