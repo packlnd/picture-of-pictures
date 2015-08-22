@@ -28,12 +28,8 @@ get '/index' do
   Image.get_coverage
 end
 
-get '/pop' do
-  Image.create_pop(params[:url])
-end
-
 get '/begin_pop' do
-  @@pop = Pop.new(params[:url])
+  @@pop = Pop.new(params[:url], params[:inc].to_i)
   Image.do_pop_row @@pop
 end
 

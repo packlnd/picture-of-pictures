@@ -1,4 +1,4 @@
-public/out.jpg
+public/*.jpg
 models/config.rb
 *.swp
 *.db

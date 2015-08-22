@@ -32,20 +32,22 @@ class Image < Sequel::Model
   end
 
   def self.do_pop_row(pop)
-    il = Magick::ImageList.new
-    1.upto(pop.col) { |x|
-      hex_color = get_hex_color(x-1,pop.y,pop.img)
-      if (h_img=H[hex_color]) == nil
-        tmp = get_flickr_url(hex_color).first.scale(0.02)
-        H[hex_color] = tmp
-        il.push(tmp)
-      else
-        il.push(h_img)
-      end
+    1.upto(pop.inc) { |y|
+      il = Magick::ImageList.new
+      1.upto(pop.col) { |x|
+        hex_color = get_hex_color(x-1,pop.y+(y-1),pop.img)
+        if (h_img=H[hex_color]) == nil
+          tmp = get_flickr_url(hex_color).first.scale(0.02)
+          H[hex_color] = tmp
+          il.push(tmp)
+        else
+          il.push(h_img)
+        end
+      }
+      pop.add_il il
     }
-    pop.add_il il
-    pop.write_to_file
     pop.increment
+    pop.write_to_file
     pop.fname
   end
 

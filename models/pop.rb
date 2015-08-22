@@ -3,7 +3,7 @@ require "open-uri"
 O = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
 
 class Pop
-  def initialize(url)
+  def initialize(url, inc)
     @img = Magick::ImageList.new
     @img.from_blob(open(url).read)
     @row = @img.rows
@@ -11,6 +11,11 @@ class Pop
     @ilg = Magick::ImageList.new
     @prefix = (0...10).map { O[rand(O.length)] }.join
     @y=0
+    @inc = inc
+  end
+
+  def inc
+    @inc
   end
 
   def col
@@ -26,7 +31,7 @@ class Pop
   end
 
   def increment
-    @y += 1
+    @y += @inc
   end
 
   def fname
@@ -34,7 +39,11 @@ class Pop
   end
 
   def write_to_file
+    unless @prev_fname.nil?
+      File.delete("public/" + @prev_fname)
+    end
     @current_fname = @prefix + @y.to_s + ".jpg"
+    @prev_fname=@current_fname
     @ilg.append(true).write("public/" + @current_fname)
   end
 
