@@ -21,35 +21,39 @@ $(document).ready(function() {
   //});
   $("#create_image").click(function() {
     var url = $("#url").val();
-    $("#source_image").attr("src", url);
-    cur=1;
-    tot=$("#source_image").naturalHeight;
+    var img = document.getElementById("source_image");
+    img.src=url;
+    img.onload = function() {
+      cur=1;
+      tot=img.naturalHeight;
+    };
     toggle_all();
     $("#frm_cancel").show();
     console.log("Starting pop");
     $.ajax({
       url: "/begin_pop?url=" + url,
-      success: function(pcnt, status) {
-        do_next_row();
+      success: function(img_name, status) {
+        do_next_row(img_name);
       }
     });
   });
 });
 
-function do_next_row() {
+function do_next_row(img_name) {
   cur += 1;
   if (cur >= tot) {
+    console.log("Done");
     $("#frm_new").show();
     return;
   }
   var img = new Image();
-  $(img).attr("src", "out.jpg");
-  $("#pop_image").html(img);
+  img.src = img_name;
   img.onload = function() {
+    $("#pop_image").html(img);
     $.ajax({
       url: "/continue_pop",
-      success: function(data, status) {
-        do_next_row();
+      success: function(img_name, status) {
+        do_next_row(img_name);
       }
     });
   };

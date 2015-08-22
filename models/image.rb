@@ -31,13 +31,7 @@ class Image < Sequel::Model
     img.save
   end
 
-  def self.begin_pop(pop)
-    puts "Beginning new pop"
-    do_row
-    200
-  end
-
-  def self.do_row(pop)
+  def self.do_pop_row(pop)
     il = Magick::ImageList.new
     1.upto(pop.col) { |x|
       hex_color = get_hex_color(x-1,pop.y,pop.img)
@@ -51,34 +45,8 @@ class Image < Sequel::Model
     }
     pop.add_il il
     pop.write_to_file
-    pop.increment_y
-    200
-  end
-
-  def self.create_pop(url)
-    h = Hash.new
-    img = Magick::ImageList.new
-    img.from_blob(open(url).read)
-    row = img.rows
-    col = img.columns
-    ilg = Magick::ImageList.new
-    1.upto(row) { |y|
-      il = Magick::ImageList.new
-      1.upto(col) { |x|
-        hex_color = get_hex_color(x-1,y-1,img)
-        if (h_img=h[hex_color]) == nil
-          tmp = get_flickr_url(hex_color).first.scale(0.02)
-          h[hex_color] = tmp
-          il.push(tmp)
-        else
-          il.push(h_img)
-        end
-      }
-      ilg.push(il.append(false))
-      puts y.to_s + "/" + row.to_s
-    }
-    ilg.append(true).write("public/out.jpg")
-    "0"
+    pop.increment
+    pop.fname
   end
 
   def self.get_flickr_url(hex_color)

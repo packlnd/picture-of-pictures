@@ -1,5 +1,7 @@
 require "open-uri"
 
+O = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
+
 class Pop
   def initialize(url)
     @img = Magick::ImageList.new
@@ -7,6 +9,7 @@ class Pop
     @row = @img.rows
     @col = @img.columns
     @ilg = Magick::ImageList.new
+    @prefix = (0...10).map { O[rand(O.length)] }.join
     @y=0
   end
 
@@ -22,12 +25,17 @@ class Pop
     @y
   end
 
-  def increment_y
+  def increment
     @y += 1
   end
 
+  def fname
+    @current_fname
+  end
+
   def write_to_file
-    @ilg.append(true).write("public/out.jpg")
+    @current_fname = @prefix + @y.to_s + ".jpg"
+    @ilg.append(true).write("public/" + @current_fname)
   end
 
   def add_il(il)
