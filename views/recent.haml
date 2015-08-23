@@ -8,6 +8,7 @@
       -Recent.limit(10).each do |r|
         %tr{align: "center"}
           %td
-            %img.thumbnail{src: "#{r.result}"}
+            %a{href: "#{r.result}", target: "blank"}
+              %img.thumbnail{src: "#{r.result}"}
           %td
             %a{href: "#{r.source}"} #{Util.shorten r.source}
