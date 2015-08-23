@@ -32,10 +32,12 @@ $(document).ready(function() {
 
 function do_next_row(img_name) {
   cur += inc;
+  $("#announcement").html((100*cur/tot).toFixed(0) + "% done");
   var img = new Image();
   img.src = img_name;
   img.onload = function() { $("#pop_image").html(img);
     if (cur > tot) {
+      $("#announcement").html("DONE");
       $("#frm_new").show();
       return;
     }
@@ -53,7 +55,6 @@ function do_next_row(img_name) {
 
 function toggle_all() {
   $("#coverage").toggle();
-  $("#p-coverage").toggle();
   $("#url").toggle();
   $("#create_image").toggle();
   $("#sel_size").toggle();
@@ -73,6 +74,6 @@ function set_coverage(coverage) {
   var color = 'color: #900;';
   if (coverage >= 50) color = 'color: #990;';
   if (coverage >= 75) color = 'color: #090;';
-  $("#p-coverage").attr("style", color);
-  $("#p-coverage").html(coverage + "% coverage");
+  $("#announcement").attr("style", color);
+  $("#announcement").html(coverage + "% coverage");
 }
