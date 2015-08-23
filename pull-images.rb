@@ -1,7 +1,6 @@
-require 'sequel'
-require './models/image.rb'
+require './models/database.rb'
 require './models/flickr.rb'
-require './models/config.rb'
+require './models/image.rb'
 
 h = Hash.new
 while true do

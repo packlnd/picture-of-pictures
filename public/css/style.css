@@ -61,8 +61,19 @@ select#sel_size {
   margin-left: 45px;
 }
 
-#recent_links {
-  width: 100%;
-  bottom: 15px;
-  position: fixed;
+#tile-box {
+  width:800px;
+  height:400px;
+}
+
+#tile {
+  display: block;
+  width: 200px;
+  height: 200px;
+}
+
+img.tiles {
+  display: block;
+  width: 200px;
+  height: 200px;
 }

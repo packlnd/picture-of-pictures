@@ -1,3 +1,7 @@
+require 'flickraw'
+require 'set'
+require './models/config.rb'
+
 S = Set.new
 
 class Flickr

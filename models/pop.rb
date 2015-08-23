@@ -82,5 +82,4 @@ class Pop
     r.result = @current_fname
     r.save
   end
-
 end

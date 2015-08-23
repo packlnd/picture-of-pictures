@@ -1,16 +1,9 @@
 require 'sinatra'
 require 'haml'
-require 'sequel'
-require 'rmagick'
-require 'prizm'
-require 'open-uri'
-require 'set'
-require 'shade'
-require 'profiler'
 require './models/database.rb'
-Dir.glob('models/*.rb').each do |model|
-  require_relative model
-end
+require './models/recent.rb'
+require './models/image.rb'
+require './models/pop.rb'
 
 configure do
   @@pop = nil
@@ -32,4 +25,8 @@ end
 
 get '/continue_pop' do
   Image.do_pop_row @@pop
+end
+
+get '/all' do
+  haml :all
 end

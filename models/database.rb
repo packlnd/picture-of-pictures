@@ -1,3 +1,5 @@
+require 'sequel'
+
 DB = Sequel.connect('sqlite://db.db')
 DB.create_table? :images do
   String :color, :null=>false, :unique=>true

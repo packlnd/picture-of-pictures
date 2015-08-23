@@ -1,0 +1,11 @@
+%table.table
+  %tbody
+    -@recent.each do |r|
+      %tr{align: "center"}
+        %td
+          %a{href: "#{r.result}", target: "blank"}
+            %img.thumbnail{src: "#{r.result}"}
+        %td
+          %a{href: "#{r.source}"} Original
+        %td
+          %a{href: "/delete"} Delete

@@ -1,18 +1,9 @@
-<!DOCTYPE html>
-%html{lang: "se"}
-  %head
-    %meta{charset: 'utf-8'}
-    %title Picture of pictures
-    %script{src: "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"}
-    %script{src: "/js/script.js"}
-    %link{href: "/css/style.css", type: "text/css", rel: "stylesheet"}
-  %body
-    %input#coverage.right{type: "submit", value: "Coverage"}
-    .clear
-    #content
-      =haml :pop_section
-      %center
-        %form#frm_new{action: "/"}
-          %input#new_pop{type: "submit", value: "New POP"}
-        =haml :result
-        =haml :recent
+%input#coverage.right{type: "submit", value: "Coverage"}
+.clear
+#content
+  =haml :pop_section
+  %center
+    %form#frm_new{action: "/"}
+      %input#new_pop{type: "submit", value: "New POP"}
+    =haml :result
+    =haml :recent
