@@ -25,11 +25,6 @@ get '/coverage' do
   Image.get_coverage
 end
 
-get '/index' do
-  Flickr.index_images
-  Image.get_coverage
-end
-
 get '/begin_pop' do
   @@pop = Pop.new(params[:url], params[:inc].to_i, params[:size])
   Image.do_pop_row @@pop
