@@ -10,39 +10,9 @@
     %input#coverage.right{type: "submit", value: "Coverage"}
     .clear
     #content
-      %center
-        #tools
-          %p#p-coverage
-          %br
-          %h1 PICTURE OF PICTURES
-          %input#url{type: "text"}
-          %input#create_image{type: "submit", value: "Create POP"}
-          .clear
-          %select#sel_size.left
-            %option{value: "small"} Small
-            %option{value: "medium"} Medium
-            %option{value: "large"} Large
+      =haml :pop_section
       %center
         %form#frm_new{action: "/"}
           %input#new_pop{type: "submit", value: "New POP"}
-        %br
-        %img#source_image
-        %br
-        %br
-        #pop_image
-        %br
-        %br
-        %br
-        #recent_links
-          %center
-            %table.table
-              %thead
-                %th Result
-                %th Original
-              %tbody
-              -Recent.limit(10).each do |r|
-                %tr{align: "center"}
-                  %td
-                    %img.thumbnail{src: "#{r.result}"}
-                  %td
-                    %a{href: "#{r.source}"} #{Util.shorten r.source}
+        =haml :result
+        =haml :recent

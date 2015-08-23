@@ -1,0 +1,13 @@
+#recent_links
+  %center
+    %table.table
+      %thead
+        %th Result
+        %th Original
+      %tbody
+      -Recent.limit(10).each do |r|
+        %tr{align: "center"}
+          %td
+            %img.thumbnail{src: "#{r.result}"}
+          %td
+            %a{href: "#{r.source}"} #{Util.shorten r.source}
