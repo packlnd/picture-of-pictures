@@ -1,5 +1,3 @@
-require "open-uri"
-
 O = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
 
 class Pop

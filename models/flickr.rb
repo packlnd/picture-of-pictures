@@ -1,7 +1,3 @@
-require 'flickraw'
-require 'colorscore'
-require 'set'
-
 S = Set.new
 
 class Flickr
