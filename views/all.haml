@@ -1,4 +1,4 @@
 %a{href: "/"} Back
 %center
-  -@recent = Recent.all
+  -@recent = Recent.all.reverse
   =haml :_table

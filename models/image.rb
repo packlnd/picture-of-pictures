@@ -2,7 +2,6 @@ require 'rmagick'
 require 'shade'
 require 'open-uri'
 require 'colorscore'
-require './models/flickr.rb'
 
 class Image < Sequel::Model
 
